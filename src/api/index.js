@@ -25,3 +25,14 @@ export const board = {
     return request('get', '/boards')
   }
 }
+
+
+export const auth = {
+  login(email, password) {
+    return request('post', '/login', {email, password})
+  }
+}
+
+export const setAuthInHeader = token => {
+  axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
+}
