@@ -43,6 +43,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * 로그인 처리
+     */
     onSubmit() {
       auth.login(this.email, this.password)
         .then(data => {

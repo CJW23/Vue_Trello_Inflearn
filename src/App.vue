@@ -7,10 +7,11 @@
 
 <script>
 import Navbar from "./components/Navbar";
+
 export default {
   name: 'app',
   components: {Navbar},
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
@@ -23,14 +24,17 @@ html, body, #app {
   height: 100%;
   margin: 0px;
 }
+
 #app {
   display: flex;
   flex-direction: column;
 }
+
 .container {
   flex-grow: 1;
   position: relative;
 }
+
 .btn {
   border-radius: 3px;
   padding: 6px 8px;
@@ -43,10 +47,12 @@ html, body, #app {
   font-weight: 700;
   cursor: pointer;
 }
+
 .btn-success {
   background-color: #5aac44;
   box-shadow: 0 1px 0 #519839;
 }
+
 .form-control {
   width: 100%;
   box-sizing: border-box;
@@ -58,11 +64,13 @@ html, body, #app {
   padding: 6px 8px;
   transition: background-color .3s;
 }
+
 input[type=text].form-control,
 input[type=password].form-control,
 textarea.form-control {
   font-size: 14px;
 }
+
 .form-control:focus {
   background-color: #fff;
 }
