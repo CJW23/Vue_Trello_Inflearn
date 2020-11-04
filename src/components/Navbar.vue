@@ -15,9 +15,6 @@
 import {setAuthInHeader} from "../api";
 
 export default {
-  data() {
-
-  },
   computed: {
     isAuth() {
       return !!localStorage.getItem("token");
