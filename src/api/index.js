@@ -32,12 +32,15 @@ const request = (method, url, data) => {
 }
 
 /**
- * board 리스트 요청
+ * board CRUD
  * @type {{fetch(): Promise<*|void>}}
  */
 export const board = {
   fetch() {
     return request('get', '/boards')
+  },
+  create(data) {
+    return request('post', '/boards', data)
   }
 }
 
