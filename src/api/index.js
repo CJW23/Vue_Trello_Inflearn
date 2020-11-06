@@ -39,8 +39,8 @@ export const board = {
   fetch() {
     return request('get', '/boards')
   },
-  create(data) {
-    return request('post', '/boards', data)
+   create(title) {
+    return request('post', '/boards', {title})
   }
 }
 
@@ -61,3 +61,4 @@ export const auth = {
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 }
+

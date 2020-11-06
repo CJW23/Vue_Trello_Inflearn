@@ -14,12 +14,13 @@
         </a>
       </div>
     </div>
-    <AddBoard v-if="isModal" @close="closeModal" @submit="onAddBoard"/>
+    <AddBoard v-if="isAddBoard" @submit="onAddBoard"/>
   </div>
 </template>
 <script>
 import {board} from '../api'
 import AddBoard from "./AddBoard";
+import {mapActions, mapMutations, mapState} from 'vuex'
 
 export default {
   components: {AddBoard},
@@ -34,6 +35,10 @@ export default {
   created() {
     this.fetchData()
   },
+  computed: {
+    ...mapState(['isAddBoard']),
+
+  },
   updated() {
     this.$refs.boardItem.forEach(el => {
       //css 설정                   태그에 달린 rgb 값
@@ -41,9 +46,13 @@ export default {
     })
   },
   methods: {
+    ...mapMutations(['SET_IS_ADD_BOARD']),
+    ...mapActions(['FETCH_BOARD']),
+
     fetchData() {
       this.loading = true
       board.fetch()
+        //this.FETCH_BOARD()
         .then(data => {
           this.boards = data.list
         })
@@ -52,18 +61,10 @@ export default {
         })
     },
     addBoard() {
-      this.isModal = true
-      console.log('addBoard()')
+      this.$store.commit('SET_IS_ADD_BOARD', true)
     },
-    closeModal() {
-      this.isModal = false
-      console.log(this.isModal)
-    },
-    onAddBoard(title) {
-      board.create({title})
-        .then(() => {
-          this.fetchData()
-        })
+    onAddBoard() {
+      this.fetchData()
     }
   }
 }
