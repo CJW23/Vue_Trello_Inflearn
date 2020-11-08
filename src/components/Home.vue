@@ -14,7 +14,7 @@
         </a>
       </div>
     </div>
-    <AddBoard v-if="isAddBoard" @submit="onAddBoard"/>
+    <AddBoard v-if="isAddBoard"/>
   </div>
 </template>
 <script>
@@ -27,44 +27,41 @@ export default {
   data() {
     return {
       loading: false,
-      boards: [],
       error: '',
       isModal: false
     }
   },
+
   created() {
     this.fetchData()
   },
+
   computed: {
-    ...mapState(['isAddBoard']),
+    ...mapState(['isAddBoard', 'boards']),
 
   },
+
   updated() {
     this.$refs.boardItem.forEach(el => {
       //css 설정                   태그에 달린 rgb 값
       el.style.backgroundColor = el.dataset.bgcolor
     })
   },
+
   methods: {
     ...mapMutations(['SET_IS_ADD_BOARD']),
     ...mapActions(['FETCH_BOARD']),
 
+    //FETCH_BOARD -> Action -> mutations -> state
     fetchData() {
       this.loading = true
-      board.fetch()
-        //this.FETCH_BOARD()
-        .then(data => {
-          this.boards = data.list
-        })
+      this.FETCH_BOARD()
         .finally(_ => {
           this.loading = false
         })
     },
     addBoard() {
-      this.$store.commit('SET_IS_ADD_BOARD', true)
-    },
-    onAddBoard() {
-      this.fetchData()
+      this.SET_IS_ADD_BOARD(true)
     }
   }
 }

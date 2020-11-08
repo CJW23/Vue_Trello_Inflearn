@@ -4,12 +4,12 @@
       <h2>
         Create new board
         <a href="" class="modal-default-button"
-          @click.prevent="close">&times;</a>
+           @click.prevent="close">&times;</a>
       </h2>
     </div>
     <div slot="body">
       <form id="add-board-form"
-        @submit.prevent="addBoard">
+            @submit.prevent="addBoard">
         <label>
           <input class="form-control" type="text" v-model="input" ref="input">
         </label>
@@ -17,8 +17,9 @@
     </div>
     <div slot="footer">
       <button class="btn" :class="{'btn-success': valid}" type="submit"
-        form="add-board-form" :disabled="!valid">
-        Create Board</button>
+              form="add-board-form" :disabled="!valid">
+        Create Board
+      </button>
     </div>
   </Modal>
 </template>
@@ -26,34 +27,41 @@
 <script>
 import Modal from './Modal.vue'
 import {mapActions, mapMutations} from "vuex";
+
 export default {
   components: {
     Modal
   },
+
   data() {
     return {
       input: '',
       valid: false
     }
   },
+
   watch: {
     input(v) {
       this.valid = v.trim().length > 0
     }
   },
+
   mounted() {
     this.$refs.input.focus()
   },
+
   methods: {
     ...mapMutations(['SET_IS_ADD_BOARD']),
-    ...mapActions(['ADD_BOARD']),
+    ...mapActions(['ADD_BOARD', 'FETCH_BOARD']),
     close() {
       this.SET_IS_ADD_BOARD(false)
     },
     addBoard() {
       this.ADD_BOARD({title: this.input})
-      this.$emit('submit')
-      this.close()
+        .then(() => {
+          this.FETCH_BOARD()
+        })
+      this.SET_IS_ADD_BOARD(false)
       //this.$store.dispatch('ADD_BOARD', {title: this.input})
     }
   }
