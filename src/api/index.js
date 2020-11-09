@@ -18,7 +18,7 @@ const onUnauthorized = () => {
  * @param data
  * @returns {Promise<* | void>}
  */
-const request = (method, url, data) => {
+const request = ({method, url, data}) => {
   return axios({
     method,
     url: DOMAIN + url,
@@ -33,14 +33,16 @@ const request = (method, url, data) => {
 
 /**
  * board CRUD
- * @type {{fetch(): Promise<*|void>}}
- */
+*/
 export const board = {
   fetch() {
-    return request('get', '/boards')
+    return request({method: 'get', url: '/boards'})
   },
    create(title) {
-    return request('post', '/boards', {title})
+    return request({method: 'post', url: '/boards', data: {title}})
+  },
+  find(id) {
+    return request({method: 'get', url: `/boards/${id}`})
   }
 }
 
