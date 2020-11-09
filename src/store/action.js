@@ -21,7 +21,7 @@ const actions = {
   FIND_BOARD({commit}, id) {
     return api.board.find(id)
       .then(data => {
-        commit('SET_BOARD', data)
+        commit('SET_BOARD', data.item)
       })
   }
 }
