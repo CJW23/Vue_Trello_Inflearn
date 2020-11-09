@@ -13,17 +13,17 @@
 
 <script>
 import {setAuthInHeader} from "../api";
+import {mapMutations, mapGetters} from 'vuex'
 
 export default {
   computed: {
-    isAuth() {
-      return !!localStorage.getItem("token");
-    }
+    //computed 를 사용한다는 것은 template 코드에서 이 변수를 사용한다
+    ...mapGetters(['isAuth']),
   },
   methods: {
+    ...mapMutations(['LOGOUT']),
     logout() {
-      localStorage.removeItem("token")
-      setAuthInHeader(null)
+      this.LOGOUT()
       this.$router.replace("/login")
     }
   }

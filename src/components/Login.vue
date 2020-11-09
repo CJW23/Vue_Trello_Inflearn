@@ -23,6 +23,7 @@
 <script>
 import {auth} from '../api'
 import {setAuthInHeader} from "../api";
+import {mapActions} from 'vuex'
 
 export default {
   data() {
@@ -43,16 +44,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['LOGIN']),
     /**
      * 로그인 처리
      */
     onSubmit() {
-      auth.login(this.email, this.password)
-        .then(data => {
-          localStorage.setItem("token", data.accessToken)
-          setAuthInHeader(data.accessToken)
+      this.LOGIN({email:this.email, password:this.password})
+        .then(() => {
           this.$router.push(this.rPath)
-          console.log(data)
         })
         .catch(err => {
           this.error = err
