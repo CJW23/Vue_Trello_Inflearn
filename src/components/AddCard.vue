@@ -11,7 +11,9 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
+  props: ['listId'],
   data() {
     return {
       inputTitle: ''
@@ -28,7 +30,10 @@ export default {
     this.setupClickOutside(this.$el)
   },
   methods: {
+    ...mapActions(['ADD_CARD']),
     onSubmit() {
+      if(this.invalidInput) return
+      const {inputTitle, listId} = this ///???????? 내일 보기
       console.log("add")
     },
     setupClickOutside(el) {

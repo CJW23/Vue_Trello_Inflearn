@@ -23,6 +23,13 @@ const actions = {
       .then(data => {
         commit('SET_BOARD', data.item)
       })
+  },
+  //카드 추가
+  ADD_CARD({dispatch, state}, {title, listId, pos}) {
+    return api.card.create(title, listId, pos)
+      .then(() => {
+        dispatch('FIND_BOARD', state.board.id)
+      })
   }
 }
 export default actions

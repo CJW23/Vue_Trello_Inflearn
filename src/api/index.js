@@ -33,12 +33,12 @@ const request = ({method, url, data}) => {
 
 /**
  * board CRUD
-*/
+ */
 export const board = {
   fetch() {
     return request({method: 'get', url: '/boards'})
   },
-   create(title) {
+  create(title) {
     return request({method: 'post', url: '/boards', data: {title}})
   },
   find(id) {
@@ -64,3 +64,8 @@ export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 }
 
+export const card = {
+  create(title, listId, pos) {
+    return request('post', '/cards', {title, listId, pos})
+  }
+}
