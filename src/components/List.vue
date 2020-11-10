@@ -3,12 +3,30 @@
     <div class="list-header">
       <div class="list-header-title">{{data.title}}</div>
     </div>
+
+    <div v-if="isAddCard">
+      <AddCard @close="isAddCard=false"/>
+    </div>
+    <div v-else>
+      <a class="add-card-btn" href="" @click.prevent.stop="isAddCard=true">&plus;Add Card</a>
+    </div>
   </div>
 </template>
 
 <script>
+import AddCard from './AddCard.vue'
+
 export default {
+  components: {AddCard},
   props: ['data'],
+  data() {
+    return {
+      isAddCard: false
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
 
