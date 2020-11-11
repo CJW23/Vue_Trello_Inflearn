@@ -26,6 +26,9 @@ const mutations = {
   },
   SET_CARD(state, card) {
     state.card = card
+  },
+  SET_IS_SHOW_BOARD_SETTINGS (state, toggle) {
+    state.isShowBoardSetting = toggle
   }
 }
 
