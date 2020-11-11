@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <div v-if="loading">loading card...</div>
-    <div v-else>Card{{ cid }}</div>
-  </div>
+  <Modal>
+    <div>
+      <div v-if="loading">loading card...</div>
+      <div v-else>Card{{ cid }}</div>
+    </div>
+  </Modal>
 </template>
 
 <script>
+import Modal from "./Modal";
+
 export default {
   name: "Card",
+  components: {Modal},
+  comments: ['Modal'],
   data() {
     return {
       loading: false
@@ -21,7 +27,7 @@ export default {
       this.loading = true
       setTimeout(() => {
         this.loading = false
-      }, 500)
+      }, 0)
     }
   },
   computed: {
