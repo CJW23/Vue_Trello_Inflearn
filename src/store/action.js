@@ -30,6 +30,12 @@ const actions = {
       .then(() => {
         dispatch('FIND_BOARD', state.board.id)
       })
+  },
+  FIND_CARD({commit}, {id}) {
+    return api.card.find(id)
+      .then(data => {
+        commit('SET_CARD', data.item)
+      })
   }
 }
 export default actions

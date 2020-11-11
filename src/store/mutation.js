@@ -23,6 +23,9 @@ const mutations = {
     state.token = null
     delete localStorage.token
     api.setAuthInHeader(null)
+  },
+  SET_CARD(state, card) {
+    state.card = card
   }
 }
 

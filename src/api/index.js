@@ -67,5 +67,8 @@ export const setAuthInHeader = token => {
 export const card = {
   create(title, listId, pos) {
     return request({method: 'post', url: '/cards', data: {title, listId, pos}})
+  },
+  find(id) {
+    return request({method: 'get', url: `/cards/${id}`})
   }
 }

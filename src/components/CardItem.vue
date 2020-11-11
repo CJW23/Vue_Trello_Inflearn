@@ -1,5 +1,6 @@
 <template>
   <div class="card-item">
+    <!-- 클릭시 -->
     <router-link :to="`/b/${boardId}/c/${data.id}`">
       <div>{{ data.title }}</div>
       <div class="card-item-meta" v-if="data.description">&equiv;</div>
