@@ -34,7 +34,8 @@ export default {
     onSubmit() {
       if(this.invalidInput) return
       const {inputTitle, listId} = this ///???????? 내일 보기
-      console.log("add")
+      this.ADD_CARD({title: inputTitle, listId: listId})
+        .finally(() => this.inputTitle = '')
     },
     setupClickOutside(el) {
       document.querySelector('body').addEventListener('click', e => {

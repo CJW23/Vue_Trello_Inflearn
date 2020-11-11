@@ -1,9 +1,11 @@
-<template>
+ <template>
   <div class="list">
     <div class="list-header">
       <div class="list-header-title">{{data.title}}</div>
     </div>
-
+    <div class="card-list">
+      <card-item v-for="card in data.cards" :key="card.id" :data="card" />
+    </div>
     <div v-if="isAddCard">
       <AddCard :list-id="data.id" @close="isAddCard=false"/>
     </div>
@@ -15,9 +17,10 @@
 
 <script>
 import AddCard from './AddCard.vue'
+import CardItem from "./CardItem";
 
 export default {
-  components: {AddCard},
+  components: {AddCard, CardItem},
   props: ['data'],
   data() {
     return {

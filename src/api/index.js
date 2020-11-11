@@ -52,7 +52,7 @@ export const board = {
  */
 export const auth = {
   login(email, password) {
-    return request('post', '/login', {email, password})
+    return request({method: 'post', url: '/login', data: {email, password}})
   }
 }
 
@@ -66,6 +66,6 @@ export const setAuthInHeader = token => {
 
 export const card = {
   create(title, listId, pos) {
-    return request('post', '/cards', {title, listId, pos})
+    return request({method: 'post', url: '/cards', data: {title, listId, pos}})
   }
 }
