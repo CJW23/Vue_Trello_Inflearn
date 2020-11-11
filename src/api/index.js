@@ -70,5 +70,9 @@ export const card = {
   },
   find(id) {
     return request({method: 'get', url: `/cards/${id}`})
+  },
+  update(id, payload) {
+    return request({method: 'put', url: `/cards/${id}`, data: payload})
   }
 }
+

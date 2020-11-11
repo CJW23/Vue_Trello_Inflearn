@@ -31,10 +31,16 @@ const actions = {
         dispatch('FIND_BOARD', state.board.id)
       })
   },
-  FIND_CARD({commit}, {id}) {
-    return api.card.find(id)
+  FIND_CARD({commit}, {cardId}) {
+    return api.card.find(cardId)
       .then(data => {
         commit('SET_CARD', data.item)
+      })
+  },
+  UPDATE_CARD({dispatch, state}, {cardId, title, description, listId, pos}) {
+    return api.card.update(cardId, {title, description, listId, pos})
+      .then(() => {
+        dispatch('FIND_BOARD', state.board.id)
       })
   }
 }
