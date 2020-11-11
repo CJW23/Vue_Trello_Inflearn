@@ -73,6 +73,7 @@ export const card = {
   },
   update(id, payload) {
     return request({method: 'put', url: `/cards/${id}`, data: payload})
-  }
+  },
+
 }
 
