@@ -42,6 +42,12 @@ const actions = {
       .then(() => {
         dispatch('FIND_BOARD', state.board.id)
       })
+  },
+  DELETE_CARD({dispatch, state}, {cardId}) {
+    return api.card.destroy(cardId)
+      .then(() => {
+        dispatch('FIND_BOARD', state.board.id)
+      })
   }
 }
 export default actions

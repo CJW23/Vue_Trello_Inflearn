@@ -74,6 +74,8 @@ export const card = {
   update(id, payload) {
     return request({method: 'put', url: `/cards/${id}`, data: payload})
   },
-
+  destroy(id) {
+    return request({method: 'delete', url: `/cards/${id}`})
+  }
 }
 

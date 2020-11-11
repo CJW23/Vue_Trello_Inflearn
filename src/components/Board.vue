@@ -58,7 +58,7 @@ export default {
       this.cDragger.on('drop', (el, wrapper, target, siblings) => {
         const targetCard = {id: el.dataset.cardId * 1, pos: 65535}
         //드랍한 카드의 양쪽 카드 정보를 가져온다
-        const {prev, next} = dragger.sibling({el, wrapper, andidates: Array.from(wrapper.querySelectorAll('.card-item')), type: 'card'})
+        const {prev, next} = dragger.sibling({el, wrapper, candidates: Array.from(wrapper.querySelectorAll('.card-item')), type: 'card'})
         if (!prev && next) targetCard.pos = next.pos / 2
         else if (prev && !next) targetCard.pos = prev.pos * 2
         else if (prev && next) targetCard.pos = (prev.pos + next.pos) / 2
