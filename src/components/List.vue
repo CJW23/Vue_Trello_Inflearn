@@ -4,6 +4,7 @@
       <input v-if="isEditTitle" v-model="inputTitle" class="form-control input-title" type="text"
         ref="inputTitle" @blur="onSubmitTitle" @keyup.enter="onSubmitTitle">
       <div v-else class="list-header-title" @click.prevent="onClickTitle">{{data.title}}</div>
+      <a class="delete-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
     </div>
     <div class="card-list" :data-list-id="data.id">
       <card-item v-for="card in data.cards" :key="card.id" :data="card" />
@@ -35,7 +36,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['UPDATE_LIST']),
+    ...mapActions(['UPDATE_LIST', 'DELETE_LIST']),
     onClickTitle() {
       this.isEditTitle = true
       this.$nextTick(() => this.$refs.inputTitle.focus())
@@ -45,6 +46,10 @@ export default {
       const title = this.inputTitle.trim()
       if(title === this.data.title) return
       this.UPDATE_LIST({listId: this.data.id, title: title})
+    },
+    onDeleteList() {
+      if(!window.confirm(`Delete ${this.data.title} list?`)) return
+      this.DELETE_LIST({listId: this.data.id})
     }
   }
 }

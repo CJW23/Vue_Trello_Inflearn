@@ -94,5 +94,8 @@ export const list = {
   },
   update(id, payload) {
     return request({method: 'put', url: `/lists/${id}`, data: payload})
+  },
+  destroy(id) {
+    return request({method: 'delete', url: `/lists/${id}`})
   }
 }

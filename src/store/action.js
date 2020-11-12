@@ -70,6 +70,10 @@ const actions = {
   UPDATE_LIST({dispatch, state}, {listId, pos, title}) {
     return api.list.update(listId, {pos: pos, title: title})
       .then(_ => dispatch('FIND_BOARD', state.board.id))
+  },
+  DELETE_LIST({dispatch, state}, {listId}){
+    return api.list.destroy(listId)
+      .then(_=> dispatch('FIND_BOARD', state.board.id))
   }
 }
 export default actions
