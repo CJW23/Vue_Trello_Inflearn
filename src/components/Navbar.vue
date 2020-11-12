@@ -13,18 +13,39 @@
 
 <script>
 import {setAuthInHeader} from "../api";
-import {mapMutations, mapGetters} from 'vuex'
+import {mapState, mapMutations, mapGetters} from 'vuex'
 
 export default {
   computed: {
+    ...mapState([
+      'navbarColor',
+      'bodyColor'
+    ]),
     //computed 를 사용한다는 것은 template 코드에서 이 변수를 사용한다
     ...mapGetters(['isAuth']),
+  },
+  watch: {
+    'bodyColor': 'updateTheme'
+  },
+  mounted() {
+    this.updateTheme()
   },
   methods: {
     ...mapMutations(['LOGOUT']),
     logout() {
       this.LOGOUT()
       this.$router.replace("/login")
+    },
+    updateTheme() {
+      this.$el.style.backgroundColor = this.navbarColor
+      const body = document.querySelector('body')
+      const container = document.querySelector('.container')
+      if(body){
+        body.style.backgroundColor = this.bodyColor
+      }
+      if(container) {
+        container.style.backgroundColor = this.bodyColor
+      }
     }
   }
 }

@@ -3,7 +3,10 @@
     <div class="board-wrapper">
       <div class="board">
         <div class="board-header">
-          <span class="board-title">{{ board.title }}</span>
+          <input class="form-control" v-if="isEditTitle" v-model="inputTitle" type="text"
+                 ref="inputTitle" @blur="onSubmitTitle" @keyup.enter="onSubmitTitle">
+          <span v-else class="board-title" @click.prevent="onClickTitle">{{ board.title }}</span>
+
           <a class="board-header-btn show-menu" href="" @click.prevent="onShowSettings">
             ... Show Menu
           </a>
@@ -36,26 +39,33 @@ export default {
     return {
       bid: 0,
       loading: true,
-      cDragger: null
+      cDragger: null,
+      isEditTitle: false,
+      inputTitle: ''
     }
   },
   computed: {
     ...mapState(['board', "isShowBoardSetting"])
   },
   created() {
-    this.fetchData();
     this.SET_IS_SHOW_BOARD_SETTINGS(false)
+    this.fetchData()
   },
   updated() {
     this.setCardDragabble()
+    this.SET_THEME(this.board.bgColor)
   },
   methods: {
-    ...mapActions(['FIND_BOARD', 'UPDATE_CARD']),
-    ...mapMutations(['SET_IS_SHOW_BOARD_SETTINGS']),
+    ...mapActions(['FIND_BOARD', 'UPDATE_CARD', 'UPDATE_BOARD']),
+    ...mapMutations(['SET_IS_SHOW_BOARD_SETTINGS', 'SET_THEME']),
+    //새로고침시 state가 초기화 되기 때문에 fetchData를 통해 state에 board를 등록해야함
     fetchData() {
       this.loading = true
       this.FIND_BOARD(this.$route.params.bid)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.loading = false
+          this.inputTitle = this.board.title
+        })
     },
     //카드 드래그 관련 함수
     setCardDragabble() {
@@ -81,6 +91,16 @@ export default {
     },
     onShowSettings() {
       this.SET_IS_SHOW_BOARD_SETTINGS(true)
+    },
+    onClickTitle() {
+      this.isEditTitle = true
+      this.$nextTick(() => this.$refs.inputTitle.focus())
+    },
+    onSubmitTitle() {
+      this.isEditTitle = false
+      const title = this.inputTitle.trim()
+      if(title === this.board.title) return
+      this.UPDATE_BOARD({id: this.board.id, title: this.inputTitle})
     }
   }
 }

@@ -12,9 +12,7 @@ const mutations = {
     state.board = board
   },
   LOGIN(state, token) {
-    if (!token) {
-      return false
-    }
+    if (!token) {return false}
     state.token = token
     localStorage.setItem('token', token)
     api.setAuthInHeader(token)
@@ -27,9 +25,14 @@ const mutations = {
   SET_CARD(state, card) {
     state.card = card
   },
-  SET_IS_SHOW_BOARD_SETTINGS (state, toggle) {
+  SET_IS_SHOW_BOARD_SETTINGS(state, toggle) {
     state.isShowBoardSetting = toggle
+  },
+  SET_THEME(state, color) {
+    state.bodyColor = color || '#ffffff'
+    state.navbarColor = color ? 'rgba(0,0,0,.15)' : '#026aa7'
   }
+
 }
 
 export default mutations

@@ -5,17 +5,18 @@ const actions = {
   ADD_BOARD(_, {title}) {
     return api.board.create(title).then(data => data.item)
   },
+  //로그인
+  LOGIN({commit}, {email, password}) {
+    return api.auth.login(email, password)
+      .then(({accessToken}) => commit('LOGIN', accessToken))
+  },
+
   //리스트 가져오기
   FETCH_BOARD({commit}) {
     return api.board.fetch()
       .then(data => {
         commit('SET_BOARDS', data.list)
       })
-  },
-  //로그인
-  LOGIN({commit}, {email, password}) {
-    return api.auth.login(email, password)
-      .then(({accessToken}) => commit('LOGIN', accessToken))
   },
   //특정 게시글
   FIND_BOARD({commit}, id) {
@@ -24,6 +25,15 @@ const actions = {
         commit('SET_BOARD', data.item)
       })
   },
+  DELETE_BOARD(_, id) {
+    return api.board.destroy(id)
+  },
+  UPDATE_BOARD({dispatch, state}, {id, title, bgColor}) {
+    return api.board.update(id, {title, bgColor})
+      .then(() => {dispatch('FIND_BOARD', state.board.id)})
+  },
+
+
   //카드 추가
   ADD_CARD({dispatch, state}, {title, listId, pos}) {
     return api.card.create(title, listId, pos)

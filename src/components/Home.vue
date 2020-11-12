@@ -18,7 +18,6 @@
   </div>
 </template>
 <script>
-import {board} from '../api'
 import AddBoard from "./AddBoard";
 import {mapActions, mapMutations, mapState} from 'vuex'
 
@@ -34,6 +33,7 @@ export default {
 
   created() {
     this.fetchData()
+    this.SET_THEME()
   },
 
   computed: {
@@ -42,14 +42,16 @@ export default {
   },
 
   updated() {
-    this.$refs.boardItem.forEach(el => {
-      //css 설정                   태그에 달린 rgb 값
-      el.style.backgroundColor = el.dataset.bgcolor
-    })
+    if(this.$refs.boardItem) {
+      this.$refs.boardItem.forEach(el => {
+        //css 설정                   태그에 달린 rgb 값
+        el.style.backgroundColor = el.dataset.bgcolor
+      })
+    }
   },
 
   methods: {
-    ...mapMutations(['SET_IS_ADD_BOARD']),
+    ...mapMutations(['SET_IS_ADD_BOARD', 'SET_THEME']),
     ...mapActions(['FETCH_BOARD']),
 
     //FETCH_BOARD -> Action -> mutations -> state

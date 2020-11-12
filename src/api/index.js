@@ -43,6 +43,12 @@ export const board = {
   },
   find(id) {
     return request({method: 'get', url: `/boards/${id}`})
+  },
+  destroy(id) {
+    return request({method: 'delete', url: `/boards/${id}`})
+  },
+  update(id, payload) {
+    return request({method: 'put', url: `/boards/${id}`, data: payload})
   }
 }
 
