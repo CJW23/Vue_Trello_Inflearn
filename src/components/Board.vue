@@ -16,6 +16,9 @@
             <div class="list-wrapper" v-for="list in board.lists">
               <List :data="list"/>
             </div>
+            <div class="list-wrapper">
+              <AddList/>
+            </div>
           </div>
         </div>
       </div>
@@ -28,13 +31,13 @@
 <script>
 import {mapState, mapActions, mapMutations} from 'vuex'
 import List from "./List"
-import dragula from 'dragula'
+import AddList from "./AddList"
 import 'dragula/dist/dragula.css'
 import dragger from "../utiles/dragger";
 import BoardSettings from "./BoardSettings";
 
 export default {
-  components: {BoardSettings, List},
+  components: {AddList, BoardSettings, List},
   data() {
     return {
       bid: 0,
@@ -99,7 +102,7 @@ export default {
     onSubmitTitle() {
       this.isEditTitle = false
       const title = this.inputTitle.trim()
-      if(title === this.board.title) return
+      if (title === this.board.title) return
       this.UPDATE_BOARD({id: this.board.id, title: this.inputTitle})
     }
   }

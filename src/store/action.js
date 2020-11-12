@@ -30,7 +30,9 @@ const actions = {
   },
   UPDATE_BOARD({dispatch, state}, {id, title, bgColor}) {
     return api.board.update(id, {title, bgColor})
-      .then(() => {dispatch('FIND_BOARD', state.board.id)})
+      .then(() => {
+        dispatch('FIND_BOARD', state.board.id)
+      })
   },
 
 
@@ -58,6 +60,12 @@ const actions = {
       .then(() => {
         dispatch('FIND_BOARD', state.board.id)
       })
+  },
+
+  ADD_LIST({dispatch, state}, {title, boardId, pos}) {
+    console.log(title, boardId, pos)
+    return api.list.create({title, boardId, pos})
+      .then(_ => dispatch('FIND_BOARD', state.board.id))
   }
 }
 export default actions

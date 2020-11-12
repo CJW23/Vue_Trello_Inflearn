@@ -70,6 +70,9 @@ export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 }
 
+/**
+ * Card CRUD
+ * */
 export const card = {
   create(title, listId, pos) {
     return request({method: 'post', url: '/cards', data: {title, listId, pos}})
@@ -85,3 +88,8 @@ export const card = {
   }
 }
 
+export const list = {
+  create(payload) {
+    return request({method: 'post', url: '/lists', data: payload})
+  }
+}
