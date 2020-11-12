@@ -91,5 +91,8 @@ export const card = {
 export const list = {
   create(payload) {
     return request({method: 'post', url: '/lists', data: payload})
+  },
+  update(id, payload) {
+    return request({method: 'put', url: `/lists/${id}`, data: payload})
   }
 }

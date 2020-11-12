@@ -63,8 +63,11 @@ const actions = {
   },
 
   ADD_LIST({dispatch, state}, {title, boardId, pos}) {
-    console.log(title, boardId, pos)
     return api.list.create({title, boardId, pos})
+      .then(_ => dispatch('FIND_BOARD', state.board.id))
+  },
+  UPDATE_LIST({dispatch, state}, {boardId, pos, title}) {
+    return api.list.update(boardId, {pos: pos, title: title})
       .then(_ => dispatch('FIND_BOARD', state.board.id))
   }
 }
