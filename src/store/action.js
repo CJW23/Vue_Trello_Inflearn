@@ -1,5 +1,6 @@
 //actions 는 비동기 처리
 import * as api from "../api";
+import {list} from "../api";
 
 const actions = {
   ADD_BOARD(_, {title}) {
@@ -66,8 +67,8 @@ const actions = {
     return api.list.create({title, boardId, pos})
       .then(_ => dispatch('FIND_BOARD', state.board.id))
   },
-  UPDATE_LIST({dispatch, state}, {boardId, pos, title}) {
-    return api.list.update(boardId, {pos: pos, title: title})
+  UPDATE_LIST({dispatch, state}, {listId, pos, title}) {
+    return api.list.update(listId, {pos: pos, title: title})
       .then(_ => dispatch('FIND_BOARD', state.board.id))
   }
 }

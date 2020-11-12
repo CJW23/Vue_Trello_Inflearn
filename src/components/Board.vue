@@ -13,7 +13,8 @@
         </div>
         <div class="list-section-wrapper">
           <div class="list-section">
-            <div class="list-wrapper" v-for="list in board.lists">
+            <div class="list-wrapper" v-for="list in board.lists" :key="list.pos"
+                 :data-list-id="list.id">
               <List :data="list"/>
             </div>
             <div class="list-wrapper">
@@ -43,6 +44,7 @@ export default {
       bid: 0,
       loading: true,
       cDragger: null,
+      lDragger: null,
       isEditTitle: false,
       inputTitle: ''
     }
@@ -56,10 +58,11 @@ export default {
   },
   updated() {
     this.setCardDragabble()
+    this.setListDragabble()
     this.SET_THEME(this.board.bgColor)
   },
   methods: {
-    ...mapActions(['FIND_BOARD', 'UPDATE_CARD', 'UPDATE_BOARD']),
+    ...mapActions(['FIND_BOARD', 'UPDATE_CARD', 'UPDATE_BOARD', 'UPDATE_LIST']),
     ...mapMutations(['SET_IS_SHOW_BOARD_SETTINGS', 'SET_THEME']),
     //새로고침시 state가 초기화 되기 때문에 fetchData를 통해 state에 board를 등록해야함
     fetchData() {
@@ -77,7 +80,11 @@ export default {
 
       //카드를 드래그 해서 놓았을 때
       this.cDragger.on('drop', (el, wrapper, target, siblings) => {
-        const targetCard = {id: el.dataset.cardId * 1, pos: 65535}
+        const targetCard = {
+          id: el.dataset.cardId * 1,
+          pos: 65535,
+          listId: wrapper.dataset.listId * 1
+        }
         //드랍한 카드의 양쪽 카드 정보를 가져온다
         const {prev, next} = dragger.sibling({
           el,
@@ -90,6 +97,33 @@ export default {
         else if (prev && next) targetCard.pos = (prev.pos + next.pos) / 2
         //카드 순서를 업데이트 한다
         this.UPDATE_CARD({cardId: targetCard.id, pos: targetCard.pos})
+      })
+    },
+    setListDragabble() {
+      if (this.lDragger) this.lDragger.destroy()
+      const optioins= {
+        invalid: (el, handle) => !/^list/.test(handle.className)
+      }
+      this.lDragger = dragger.init(Array.from(this.$el.querySelectorAll('.list-section')), optioins)
+
+      //카드를 드래그 해서 놓았을 때
+      this.lDragger.on('drop', (el, wrapper, target, siblings) => {
+        const targetList = {
+          id: el.dataset.listId * 1,
+          pos: 65535
+        }
+        //드랍한 카드의 양쪽 카드 정보를 가져온다
+        const {prev, next} = dragger.sibling({
+          el,
+          wrapper,
+          candidates: Array.from(wrapper.querySelectorAll('.list')),
+          type: 'list'
+        })
+        if (!prev && next) targetList.pos = next.pos / 2
+        else if (prev && !next) targetList.pos = prev.pos * 2
+        else if (prev && next) targetList.pos = (prev.pos + next.pos) / 2
+        //카드 순서를 업데이트 한다
+        this.UPDATE_LIST({listId: targetList.id, pos: targetList.pos})
       })
     },
     onShowSettings() {

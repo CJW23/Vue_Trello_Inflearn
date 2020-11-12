@@ -1,11 +1,11 @@
  <template>
-  <div class="list">
+  <div class="list" :data-list-id="data.id" :data-list-pos="data.pos">
     <div class="list-header">
       <input v-if="isEditTitle" v-model="inputTitle" class="form-control input-title" type="text"
         ref="inputTitle" @blur="onSubmitTitle" @keyup.enter="onSubmitTitle">
       <div v-else class="list-header-title" @click.prevent="onClickTitle">{{data.title}}</div>
     </div>
-    <div class="card-list">
+    <div class="card-list" :data-list-id="data.id">
       <card-item v-for="card in data.cards" :key="card.id" :data="card" />
     </div>
     <div v-if="isAddCard">
@@ -44,7 +44,7 @@ export default {
       this.isEditTitle = false
       const title = this.inputTitle.trim()
       if(title === this.data.title) return
-      this.UPDATE_LIST({boardId: this.data.id, title: title})
+      this.UPDATE_LIST({listId: this.data.id, title: title})
     }
   }
 }
