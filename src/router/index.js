@@ -7,7 +7,7 @@ import Board from "../components/Board";
 import Card from "../components/Card";
 import store from "../store";
 Vue.use(VueRouter)
-
+//master주석
 const requireAuth = (to, from, next) => {
   const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
   store.getters.isAuth ? next() : next(loginPath)
