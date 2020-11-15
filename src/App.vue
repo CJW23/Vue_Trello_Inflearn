@@ -7,7 +7,7 @@
 
 <script>
 import Navbar from "./components/Navbar";
-
+//test 주석
 export default {
   name: 'app',
   components: {Navbar},
