@@ -17,6 +17,7 @@ export default {
     }
   }
 }
+//test2 주석
 </script>
 
 <style>
